@@ -5,7 +5,7 @@ require_once '/usr/share/php/stuff.php';
 
 $name = filter_var($_REQUEST['invitee_full_name'], FILTER_SANITIZE_STRING);
 $notes = filter_var($_REQUEST['answer_1'], FILTER_SANITIZE_STRING);
-$email = ''; # = filter_var($_REQUEST['invitee_email'], FILTER_SANITIZE_EMAIL);
+$email = filter_var($_REQUEST['invitee_email'], FILTER_SANITIZE_EMAIL);
 $phone = ''; # = filter_var($_REQUEST['invitee_email'], FILTER_SANITIZE_STRING);
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
