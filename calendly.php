@@ -12,6 +12,9 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
   die('Invalid email format');
 }
 
+$api = getenv('EASYCRUIT_API')
+print("<p>$api</p>");
+
 $client = new \GuzzleHttp\Client();
 $response = $client->post("https://system.easypractice.net/api/v1/clients", [
   'headers' => [
@@ -27,12 +30,15 @@ $response = $client->post("https://system.easypractice.net/api/v1/clients", [
   ]
 ]);
 
-$body = $response->getBody();
-print_r(json_decode((string) $body));
-
-if ($response->getStatusCode() != 200) {
+if ($response->getStatusCode() != 201) {
   die('API request failed with status ' . $response->getStatusCode());
 }
+
+$body = $response->getBody();
+print("<pre>");
+print_r(json_decode((string) $body));
+print("</pre>");
+
 
 
 ?>
