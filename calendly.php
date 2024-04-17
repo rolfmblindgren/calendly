@@ -9,29 +9,30 @@ $email = filter_var($_REQUEST['invitee_email'], FILTER_SANITIZE_EMAIL);
 $phone = ''; # = filter_var($_REQUEST['invitee_email'], FILTER_SANITIZE_STRING);
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    die('Invalid email format');
+  die('Invalid email format');
 }
 
 $client = new \GuzzleHttp\Client();
 $response = $client->post("https://system.easypractice.net/api/v1/clients", [
-    'headers' => [
-        "Content-Type" => "application/json",
-        "Accept" => "application/json",
-        "Authorization" => "Bearer " . getenv('EASYCRUIT_API')
-    ],
-        'json' => [
-            "name" => $name,
-            "email" => $email,
-            "phone" => $phone,
-            "notes" => $notes
-                ]
-    ]);
-
-if ($response->getStatusCode() != 200) {
-    die('API request failed with status ' . $response->getStatusCode());
-}
+  'headers' => [
+    "Content-Type" => "application/json",
+    "Accept" => "application/json",
+    "Authorization" => "Bearer " . getenv('EASYCRUIT_API')
+  ],
+  'json' => [
+    "name" => $name,
+    "email" => $email,
+    "phone" => $phone,
+    "notes" => $notes
+  ]
+]);
 
 $body = $response->getBody();
 print_r(json_decode((string) $body));
+
+if ($response->getStatusCode() != 200) {
+  die('API request failed with status ' . $response->getStatusCode());
+}
+
 
 ?>
